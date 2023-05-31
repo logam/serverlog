@@ -8,6 +8,14 @@ RUN apk update && apk add --no-cache \
     zip \
     unzip
 
+# Instalar pacotes necessários para o PostgreSQL
+RUN apk add --no-cache postgresql-dev
+
+# Configurar extensão do PHP para o PostgreSQL
+RUN docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-install pdo_pgsql pgsql
+
+
 # Instalar módulos PDO para acesso a dados
 RUN docker-php-ext-install pdo_mysql pdo_pgsql
 
